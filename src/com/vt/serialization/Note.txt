@@ -1,0 +1,66 @@
+serialization :
+         It is a process of writing the state of an object into bytes/stream/file.
+
+deserialization : 
+         It is a process of read the state of an object from bytes/Stream/File.
+         
+ Marker Interface :
+         Marker interface is an interface which does not have any methods and variables.
+         which it will mark java classes to specific types. like Remote, Cloneable, Serializable            
+                          
+String, all wrapper class are implemented Serialization.                          
+primitive types and java objects will be persisted using Serialization.
+
+Java Object Serialization Steps :
+
+1. Has to implement java.io.Serializable Interface
+2. persist the data By using ObjectOutPutStream class
+    
+    public ObjectOutputStream(OutputStream out) throws IOException {}creates an ObjectOutputStream that writes to the specified OutputStream.
+    
+    ObjectOutPutStream 
+                     |----> final void writeXXX(Object o)
+                     |----> void flush()
+                     |----> void close()                     
+                     
+                     
+Java Object DeSerialization Steps :
+
+1. read the persisted data from stream using ObjectInputStream class
+
+	public ObjectInputStream(InputStream in) throws IOException {}	                     
+	
+	ObjectInputStream
+					|----> void close()
+					|----> final Object readXXX()
+
+Java Object Serialization with Inheritance (IS-A Relationship) :
+
+1. if Parent class implemented Serialization then no need to implement in sub class.
+2. if parent class not implemented serialization and sub class has implemented serialization in that case will get an error.
+
+If a superclass is not serializable then subclass can still be serialized :
+ Even though superclass doesn’t implements Serializable interface, we can serialize subclass object 
+ if subclass itself implements Serializable interface. 
+ So we can say that to serialize subclass object, superclass need not to be serializable.
+  But what happens with the instances of superclass during serialization in this case. The following procedure explain this.
+What happens when a class is serializable but its superclass is not ?
+
+Serialization: At the time of serialization, if any instance variable is inheriting from non-serializable superclass, then JVM ignores original value of that instance variable and save default value to the file.
+De- Serialization: At the time of de-serialization, if any non-serializable superclass is present, then JVM will execute instance control flow in the superclass. To execute instance control flow in a class, JVM will always invoke default(no-arg) constructor of that class. So every non-serializable superclass must necessarily contain default constructor, otherwise we will get runtime-exception.
+
+Java Serialization with Aggregation (HAS-A Relationship) :
+
+If a class has a reference of another class, all the references must be Serializable otherwise serialization process will not be performed. In such case, NotSerializableException is thrown at runtime.
+
+
+Java Serialization with Static variable :
+
+static variable will no be serializable, since static is a class level not in object level.
+
+ The serialVersionUID is used as a version control in a Serializable class. If you do not explicitly declare a serialVersionUID, JVM will do it for you automatically, based on various aspects of your Serializable class, as described in the Java(TM) Object Serialization Specification.
+
+ 
+
+					
+					
